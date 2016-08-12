@@ -1,0 +1,16 @@
+ <div class="media-left media-middle">
+            <a [routerLink] = "['DishDetails', { id: id}]">
+            <img class="media-object img-thumbnail"
+             src={{image}} alt="Uthappizza">
+            </a>
+        </div>
+        <div class="media-body">
+            <h2 class="media-heading">{{name}}
+            <span class="label label-danger label-xs">{{label}}</span>
+            <span class="badge">{{price/100 | currency}}</span></h2>
+            <p *ngIf="showDetails">{{description}}</p>
+            <button  *ngIf="showFavorites" (click)="addToFavorites(id)" class="btn btn-xs btn-default pull-right"
+        type="button">
+                <i class="fa fa-heart"></i>
+            </button>
+ </div>

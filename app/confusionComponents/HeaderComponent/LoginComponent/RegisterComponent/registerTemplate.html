@@ -1,0 +1,62 @@
+    <div *ngIf = "showRegister" class="modal fade show in danger"  role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Register </h3>
+                </div>
+                <div class="">&nbsp;</div>
+                <div class="modal-body">
+                    <form #f = ngForm (ngSubmit) = "Register()">
+                        <div class="form-group">
+                            <label class="sr-only"
+                                for="userName">userName</label>
+                            <input type="text" 
+                                    ngControl = "userName" 
+                                    #userName="ngForm" 
+                                    class="form-control input-sm" 
+                                    id="userName" 
+                                    placeholder="userName" 
+                                [(ngModel)]="registrationData.username">
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only" for="password">Password</label>
+                            <input type="password" 
+                                    class="form-control input-sm" 
+                                    id="password" 
+                                    placeholder="Password"
+                                    [(ngModel)]="registrationData.password">
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only" for="firstname">First Name</label>
+                            <input type="text" 
+                                    class="form-control input-sm" 
+                                    id="firstname" 
+                                    placeholder="First Name"
+                                    [(ngModel)]="registrationData.firstname">
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only" for="lastname">Last Name</label>
+                            <input type="text" 
+                                    class="form-control input-sm" 
+                                    id="lastname" 
+                                    placeholder="Last Name"
+                                    [(ngModel)]="registrationData.lastname">
+                        </div>
+                        <div class="alert" *ngIf = "requestSubmitted"   [class.alert-danger] = "registrationFailed"
+                                            [class.alert-success] = "!registrationFailed">
+                                        {{message}}
+                        </div>
+                        
+                        <!--<div class="checkbox">
+                            <label>
+                                <input type="checkbox"
+                                        [(ngModel)]="registrationData.rememberMe"> Remember me
+                            </label>
+                        </div>-->
+                        <button type="submit" class="btn btn-info btn-sm">Register</button>
+                        <button type="button" class="btn btn-default btn-sm" (click)= "hideDialog()">Close</button>
+                    </form>
+                </div>
+             </div>
+        </div>
+    </div>

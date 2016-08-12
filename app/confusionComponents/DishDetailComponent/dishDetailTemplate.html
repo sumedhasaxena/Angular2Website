@@ -1,0 +1,146 @@
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+               <ul class="breadcrumb">
+                   <li><a href="index.html">Home</a></li>
+                   <li><a href="index.html#/menu">Menu</a></li>
+                   <li class="active">Dish Details</li>
+               </ul>
+            </div>
+            <div class="col-xs-12">
+               <h3>Dish Details</h3>
+               <hr>
+            </div>
+        </div>
+        <div class="row row-content">
+            <div class="col-xs-12" *ngIf="!showDish">
+                <h3>{{message}}</h3>
+            </div>
+            <div class="col-xs-12" *ngIf="showDish">
+                <button class="btn btn-xs btn-primary pull-right"
+                    type="button" [routerLink] = "['Menu']">
+                    Back to Menu
+                </button> 
+                <div class="media">
+                    <div class="media-left media-middle">
+                        <a href="#">
+                        <img class="media-object img-thumbnail" 
+                        src={{dish.image}} alt="Uthappizza">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h2 class="media-heading">{{dish.name}} 
+                        <span class="label label-danger">{{dish.label}}</span> 
+                        <span class="badge">{{dish.price/100 | currency}}</span></h2>
+                        <p>{{dish.description}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-9 col-xs-offset-1">
+                   <h4>Customer Comments &nbsp;&nbsp;&nbsp;
+                       <small>Sort by: &nbsp; 
+                            <input type="text" [(ngModel)]="orderText">
+                       </small>
+                    </h4>
+                    <ul class="list-unstyled">
+                        <li *ngFor="let comment of dishComments | orderBy:orderText">
+                          <blockquote>
+                             <p>{{comment.rating}} Stars</p>
+                             <p>{{comment.comment}}</p>
+                             <!--TODO-->
+                             <!--<footer>{{comment.postedBy.firstname}} {{comment.postedBy.lastname}}, {{comment.updatedAt | date:'MMM. dd, yyyy'}}</footer>-->
+                              <footer> {{comment.updatedAt | datePipe:'MMM. dd, yyyy'}}</footer>
+                          </blockquote>
+                        </li>
+                    </ul>
+            </div>
+            <div class="col-xs-9 col-xs-offset-1">               
+                    <ul class="list-unstyled" *ngIf="commentForm.valid && commentForm.dirty && !formSubmitted">
+                        <li>
+                          <blockquote>
+                             <p>{{mycomment.rating}} Stars</p>
+                             <p>{{mycomment.comment}}</p>                             
+                          </blockquote>
+                        </li>
+                    </ul>
+                <form #commentForm = ngForm (ngSubmit) = "submitComment(commentForm.form)" novalidate>
+                    <div class="form-group">
+                       <label for="numpeople" class="col-sm-2 control-label">
+                        Number of Stars</label>
+                        <div class="col-sm-10">
+                            <label class="radio-inline">
+                            <input type="radio" 
+                                    name="rating"                                     
+                                    id="rating1"
+                                    value=1
+                                    (click) = "setRating(1)"
+                                    [ngModel]="{checked: mycomment.rating == '1'}"> 1
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" 
+                                        name="rating"
+                                        id="rating2"
+                                        value=2
+                                        (click) = "setRating(2)"
+                                    [ngModel]="{checked: mycomment.rating == '2'}"> 2
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" 
+                                        name="rating" 
+                                        id="rating3" 
+                                        value=3
+                                        (click) = "setRating(3)"
+                                    [ngModel]="{checked: mycomment.rating == '3'}"> 3
+                            </label>
+                             <label class="radio-inline">
+                                <input type="radio" 
+                                        name="rating" 
+                                        id="rating4" 
+                                        value=4
+                                        (click) = "setRating(4)"
+                                    [ngModel]="{checked: mycomment.rating == '4'}"> 4
+                            </label>
+                             <label class="radio-inline">
+                                <input type="radio" 
+                                        name="rating" 
+                                        id="rating5" 
+                                        value=5
+                                        (click) = "setRating(5)"
+                                    [ngModel]="{checked: mycomment.rating == '5'}"> 5
+
+                            </label>
+                        </div>
+                    </div>                    
+                    <div class="form-group" >
+                        <label for="comments" class="col-sm-2 control-label">
+                            Your Comments</label>
+                        <div class="col-sm-10">
+                            <textarea 
+                                    ngControl = "comments" 
+                                    #comments="ngForm"
+                                    class="form-control" 
+                                    rows="12" 
+                                    name="comments"
+                                    [(ngModel)]="mycomment.comment" 
+                                    required>
+                            </textarea>
+                            <div *ngIf="comments.touched && comments.errors">
+                                <span *ngIf="comments.errors.required" class="alert alert-danger" >
+                                Your comments are required.</span>
+                            </div>
+                       </div>
+                    </div> 
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit"
+                             class="btn btn-primary"
+                             [disabled]="!commentForm.valid">
+                             Submit Comment</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
